@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const pool = require("./db");
+var pool = require("./db");
 const jwt = require("jsonwebtoken");
 const postRoute = require("./routes/post");
 const followRoute = require("./routes/follow");

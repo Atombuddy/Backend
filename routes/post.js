@@ -1,23 +1,24 @@
 const express = require("express");
 const app = express();
-const pool = require("../db");
+var pool = require("../db");
 app.use(express.json());
 
-var token ="secret"
+var token = "secret";
 
 module.exports = {
   post: async (req, res) => {
     try {
       const { title, description } = req.body;
       if (token != "") {
-        const id = await pool.query("SELECT userid FROM userdata where jwt=$1", [
-          token,
-        ]);
+        const id = await pool.query(
+          "SELECT userid FROM userdata where jwt=$1",
+          [token]
+        );
         const currDate = await pool.query("select now() at time zone 'utc'");
         const postid = await pool.query("SELECT MAX(postid) FROM postdata");
         await pool.query(
           "INSERT INTO postdata (userid,posttitle,postdescription,createdon) VALUES($1,$2,$3,$4)",
-          [id.rows[0].userid, title, description,currDate.rows[0].timezone]
+          [id.rows[0].userid, title, description, currDate.rows[0].timezone]
         );
         res.json({
           PostID: postid.rows[0].max,
@@ -34,21 +35,21 @@ module.exports = {
   },
 
   deletePost: async (req, res) => {
-  try {
-    var { id } = req.params;
-    id = Number(id);
-    if (token != "") {
-      await pool.query("DELETE FROM postdata WHERE postid=$1", [id]);
-      res.json("Success");
-    } else {
-      res.json("Not Authenticated");
+    try {
+      var { id } = req.params;
+      id = Number(id);
+      if (token != "") {
+        await pool.query("DELETE FROM postdata WHERE postid=$1", [id]);
+        res.json("Success");
+      } else {
+        res.json("Not Authenticated");
+      }
+    } catch (err) {
+      res.json(err.message);
     }
-  } catch (err) {
-    res.json(err.message);
-  }
   },
 
-  getPost:async (req, res) => {
+  getPost: async (req, res) => {
     try {
       var { id } = req.params;
       id = Number(id);
@@ -78,7 +79,7 @@ module.exports = {
     }
   },
 
-  getAllPosts:async (req, res) => {
+  getAllPosts: async (req, res) => {
     try {
       if (token != "") {
         const user = await pool.query(
@@ -96,5 +97,5 @@ module.exports = {
     } catch (err) {
       res.json(err.message);
     }
-  }
+  },
 };

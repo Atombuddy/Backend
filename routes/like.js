@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const pool = require("../db");
+var pool = require("../db");
 app.use(express.json());
 
 var token ="secret"
