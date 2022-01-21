@@ -11,9 +11,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
-var token ="secret"
-//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbGlkIjoibmF6ZWVyb2ZmQGdtYWlsLmNvbSIsImlhdCI6MTY0MjY5NTExOX0.8L7gWOPGd1CSGIdWzGLsTRlTdfYrqhaZ1T9Yxlce1_Q";
-
+var token ="secret";
 
 app.get("/",(req,res)=>{
   res.send("Welcome")
