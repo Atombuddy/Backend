@@ -11,9 +11,7 @@
   "dependencies": {
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
-    "pg": "^8.7.1"
-  },
-  "devDependencies": {
+    "pg": "^8.7.1",
     "nodemon": "^2.0.15"
   }
 }
